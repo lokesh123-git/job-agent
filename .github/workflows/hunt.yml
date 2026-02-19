@@ -1,1 +1,35 @@
+name: Hourly US Job Hunter
 
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *' # Runs every 60 minutes
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Allows the bot to update jobs.json
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Run Hunt
+        env:
+          SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
+        run: python hunter.py
+
+      - name: Commit and Push Updates
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add jobs.json
+          git commit -m "Update leads & 6PM Archive [skip ci]" || exit 0
+          git push
