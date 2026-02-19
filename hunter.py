@@ -8,11 +8,11 @@ SERPER_KEY = os.getenv("SERPER_API_KEY")
 def get_jobs():
     """Step 1: Hunt 15-20 quality jobs by limiting results per role."""
     queries = [
-        'intitle:"Data Analyst" "United States" site:jobs.lever.co',
-        'intitle:"Data Engineer" "United States" site:jobs.lever.co',
-        'intitle:"Data Analyst" "United States" site:job-boards.greenhouse.io',
-        'intitle:"Power BI" "United States" site:job-boards.greenhouse.io',
-        'intitle:"Business Intelligence" "United States" site:boards.greenhouse.io'
+        'intitle:"Manufacturing Systems Analyst" "United States" site:jobs.lever.co',
+        'intitle:"ERP Production Analyst" "United States" site:jobs.lever.co',
+        'intitle:"Manufacturing Data Analyst" "United States" site:job-boards.greenhouse.io',
+        'intitle:"Production Planning Analyst" "United States" site:job-boards.greenhouse.io',
+        'intitle:"Manufacturing Systems Analyst" "United States" site:boards.greenhouse.io'
     ]
     
     url = "https://google.serper.dev/search"
