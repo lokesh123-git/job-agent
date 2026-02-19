@@ -7,14 +7,14 @@ from datetime import datetime, timedelta
 SERPER_KEY = os.getenv("SERPER_API_KEY")
 
 def get_jobs():
-    """Step 1: Hunt 15-20 quality OneStream Developer jobs."""
-    # Targeted queries for OneStream roles in the US
+    """Step 1: Hunt 15-20 quality Software Engineering jobs."""
+    # Targeted queries for Software Engineering roles in the US
     queries = [
-        'intitle:"OneStream Developer" "United States" site:jobs.lever.co',
-        'intitle:"OneStream Consultant" "United States" site:jobs.lever.co',
-        'intitle:"OneStream Architect" "United States" site:job-boards.greenhouse.io',
-        'intitle:"OneStream Developer" "United States" site:job-boards.greenhouse.io',
-        'intitle:"OneStream Engineer" "United States" site:boards.greenhouse.io'
+        'intitle:"Software Engineer" "United States" site:jobs.lever.co',
+        'intitle:"Full Stack Engineer" "United States" site:jobs.lever.co',
+        'intitle:"Backend Engineer" "United States" site:job-boards.greenhouse.io',
+        'intitle:"Frontend Engineer" "United States" site:job-boards.greenhouse.io',
+        'intitle:"Software Developer" "United States" site:boards.greenhouse.io'
     ]
     
     url = "https://google.serper.dev/search"
@@ -50,7 +50,6 @@ def update_database(new_raw_leads):
     database = [j for j in database if datetime.strptime(j['found_at'], "%Y-%m-%d %H:%M") > three_days_ago]
 
     # Step 5: 6PM LOCK (23:00 UTC) - Move 'New' to 'Best_Archived' for Morning Review
-    # This keeps your dashboard clean for the next day's hunt
     if datetime.now().hour == 23:
         for job in database:
             if job['status'] == 'New':
@@ -63,11 +62,11 @@ def update_database(new_raw_leads):
     for lead in new_raw_leads:
         url = lead.get('link')
         if url and url not in existing_urls:
-            title = lead.get('title', 'OneStream Developer')
+            title = lead.get('title', 'Software Engineer')
             posted_time = lead.get('date', 'Just now') 
             
             # Simple company extraction logic
-            company = "US Company"
+            company = "US Tech Co"
             if " at " in title:
                 company = title.split(" at ")[-1].split(" - ")[0]
             elif " - " in title:
@@ -89,7 +88,7 @@ def update_database(new_raw_leads):
     with open(file_path, 'w') as f:
         json.dump(database, f, indent=4)
     
-    print(f"✅ Success: {len(new_entries)} new OneStream leads found. Total: {len(database)}")
+    print(f"✅ Success: {len(new_entries)} new Software Engineer leads found. Total: {len(database)}")
 
 if __name__ == "__main__":
     if not SERPER_KEY:
