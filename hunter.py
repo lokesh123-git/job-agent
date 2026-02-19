@@ -7,14 +7,14 @@ from datetime import datetime, timedelta
 SERPER_KEY = os.getenv("SERPER_API_KEY")
 
 def get_jobs():
-    """Step 1: Hunt 15-20 quality Software Engineering jobs."""
-    # Targeted queries for Software Engineering roles in the US
+    """Step 1: Hunt quality Manufacturing Data Analyst jobs from across the internet."""
+    # Broad queries without site-specific limitations
     queries = [
-        'intitle:"Software Engineer" "United States" site:jobs.lever.co',
-        'intitle:"Full Stack Engineer" "United States" site:jobs.lever.co',
-        'intitle:"Backend Engineer" "United States" site:job-boards.greenhouse.io',
-        'intitle:"Frontend Engineer" "United States" site:job-boards.greenhouse.io',
-        'intitle:"Software Developer" "United States" site:boards.greenhouse.io'
+        'intitle:"Manufacturing Systems Analyst" "United States" job',
+        'intitle:"ERP Production Analyst" "United States" job',
+        'intitle:"Manufacturing Data Analyst" "United States" job',
+        'intitle:"Production Planning Analyst" "United States" job',
+        'intitle:"Supply Chain Data Analyst" "Manufacturing" "United States" job'
     ]
     
     url = "https://google.serper.dev/search"
@@ -23,8 +23,9 @@ def get_jobs():
 
     for q in queries:
         try:
-            # Fetching 4 results per query to stay within a healthy limit
-            res = requests.post(url, headers=headers, json={"q": q, "num": 4, "tbs": "qdr:d"})
+            # num: 10 allows for more results per query since we are searching the whole web
+            # tbs: "qdr:d" ensures we only get results from the last 24 hours
+            res = requests.post(url, headers=headers, json={"q": q, "num": 10, "tbs": "qdr:d"})
             organic = res.json().get('organic', [])
             all_results.extend(organic)
         except Exception as e:
@@ -49,7 +50,7 @@ def update_database(new_raw_leads):
     three_days_ago = datetime.now() - timedelta(days=3)
     database = [j for j in database if datetime.strptime(j['found_at'], "%Y-%m-%d %H:%M") > three_days_ago]
 
-    # Step 5: 6PM LOCK (23:00 UTC) - Move 'New' to 'Best_Archived' for Morning Review
+    # Step 5: 6PM LOCK (23:00 UTC) - Move 'New' to 'Best_Archived'
     if datetime.now().hour == 23:
         for job in database:
             if job['status'] == 'New':
@@ -62,15 +63,15 @@ def update_database(new_raw_leads):
     for lead in new_raw_leads:
         url = lead.get('link')
         if url and url not in existing_urls:
-            title = lead.get('title', 'Software Engineer')
+            title = lead.get('title', 'Manufacturing Data Analyst')
             posted_time = lead.get('date', 'Just now') 
             
-            # Simple company extraction logic
-            company = "US Tech Co"
+            # Refined company extraction for broader search results
+            company = "US Manufacturing Co"
             if " at " in title:
                 company = title.split(" at ")[-1].split(" - ")[0]
-            elif " - " in title:
-                company = title.split(" - ")[0]
+            elif " | " in title:
+                company = title.split(" | ")[-1]
 
             new_entries.append({
                 "title": title,
@@ -82,13 +83,13 @@ def update_database(new_raw_leads):
             })
             existing_urls.add(url)
 
-    # Combine new leads at the top, cap total database at 50
-    database = (new_entries + database)[:50]
+    # Combine new leads at the top, cap total database at 100 for broader searches
+    database = (new_entries + database)[:100]
 
     with open(file_path, 'w') as f:
         json.dump(database, f, indent=4)
     
-    print(f"✅ Success: {len(new_entries)} new Software Engineer leads found. Total: {len(database)}")
+    print(f"✅ Success: {len(new_entries)} new leads found. Total: {len(database)}")
 
 if __name__ == "__main__":
     if not SERPER_KEY:
