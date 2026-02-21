@@ -1,5 +1,45 @@
 [
     {
+        "title": "business operations analyst, New York, NY - Glassdoor",
+        "url": "https://www.glassdoor.com/Job/new-york-business-operations-analyst-jobs-SRCH_IL.0,8_IC1132348_KO9,36.htm",
+        "company": "US Company",
+        "status": "New",
+        "posted_at": "9 hours ago",
+        "found_at": "2026-02-21 19:29"
+    },
+    {
+        "title": "41 Supply chain analyst jobs in Houston, TX - Glassdoor",
+        "url": "https://www.glassdoor.com/Job/houston-supply-chain-analyst-jobs-SRCH_IL.0,7_IC1140171_KO8,28.htm",
+        "company": "US Company",
+        "status": "New",
+        "posted_at": "1 hour ago",
+        "found_at": "2026-02-21 19:29"
+    },
+    {
+        "title": "Lead Sales Operations Analyst at Albertsons Companies - RevPath",
+        "url": "https://revpath.dealhub.io/jobs/294993057-lead-sales-operations-analyst",
+        "company": "Albertsons Companies",
+        "status": "New",
+        "posted_at": "11 hours ago",
+        "found_at": "2026-02-21 19:29"
+    },
+    {
+        "title": "Senior Sales Operations Analyst at Ibotta - RevPath",
+        "url": "https://revpath.dealhub.io/jobs/154896779-senior-sales-operations-analyst",
+        "company": "Ibotta",
+        "status": "New",
+        "posted_at": "2 hours ago",
+        "found_at": "2026-02-21 19:29"
+    },
+    {
+        "title": "Sales Operations Analyst at GoldBug - RevPath",
+        "url": "https://revpath.dealhub.io/jobs/294993054-sales-operations-analyst",
+        "company": "GoldBug",
+        "status": "New",
+        "posted_at": "2 hours ago",
+        "found_at": "2026-02-21 19:29"
+    },
+    {
         "title": "423 Operations Analyst Jobs in Remote",
         "url": "https://www.glassdoor.com/Job/remote-operations-analyst-jobs-SRCH_IL.0,6_IS11047_KO7,25.htm",
         "company": "US Company",
@@ -757,46 +797,6 @@
         "company": "US Company",
         "status": "Best_Archived",
         "posted_at": "9 hours ago",
-        "found_at": "2026-02-20 19:40"
-    },
-    {
-        "title": "Sr Business Operations Analyst (PED #52980) - Santa Fe, NM 87505",
-        "url": "https://www.indeed.com/viewjob?jk=7ae5c509ad09401d",
-        "company": "US Company",
-        "status": "Best_Archived",
-        "posted_at": "11 hours ago",
-        "found_at": "2026-02-20 19:40"
-    },
-    {
-        "title": "Supply Chain Analyst Jobs - Robert Half",
-        "url": "https://www.roberthalf.com/us/en/jobs/all/supply-chain-analyst",
-        "company": "US Company",
-        "status": "Best_Archived",
-        "posted_at": "12 hours ago",
-        "found_at": "2026-02-20 19:40"
-    },
-    {
-        "title": "43 Supply chain analyst jobs in Sunnyvale, CA - Glassdoor",
-        "url": "https://www.glassdoor.com/Job/sunnyvale-supply-chain-analyst-jobs-SRCH_IL.0,9_IC1147442_KO10,30.htm",
-        "company": "US Company",
-        "status": "Best_Archived",
-        "posted_at": "18 hours ago",
-        "found_at": "2026-02-20 19:40"
-    },
-    {
-        "title": "Supply Chain Analyst - Chandler, AZ 85286 - Indeed.com",
-        "url": "https://www.indeed.com/viewjob?jk=a090510aacad5907",
-        "company": "US Company",
-        "status": "Best_Archived",
-        "posted_at": "22 hours ago",
-        "found_at": "2026-02-20 19:40"
-    },
-    {
-        "title": "Sales Operations Analyst - Georgiana, AL - Indeed.com",
-        "url": "https://www.indeed.com/viewjob?jk=bcc886c27449c62f",
-        "company": "US Company",
-        "status": "Best_Archived",
-        "posted_at": "21 hours ago",
         "found_at": "2026-02-20 19:40"
     }
 ]
