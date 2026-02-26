@@ -3,18 +3,19 @@ import json
 import requests
 from datetime import datetime, timedelta
 
-# Ensure SERPER_API_KEY is in your GitHub Secrets
+# Ensure you have set this in your GitHub Repo Secrets
 SERPER_KEY = os.getenv("SERPER_API_KEY")
 
 def get_jobs():
-    """Step 1: Hunt quality Operations Analyst jobs across the web."""
-    # Broad queries to capture multiple operations specialties
+    """Step 1: Hunt for hybrid Mechanical, Manufacturing, and Data roles."""
+    # Queries targeting the intersection of physical engineering and data
     queries = [
-        'intitle:"Operations Analyst" "United States" job',
-        'intitle:"Business Operations Analyst" "United States" job',
-        'intitle:"Supply Chain Analyst" "United States" job',
-        'intitle:"Financial Operations Analyst" "United States" job',
-        'intitle:"Sales Operations Analyst" "United States" job'
+        'intitle:"Manufacturing Engineer" "Data Analyst" "United States"',
+        'intitle:"MES Analyst" "Manufacturing" "United States" job',
+        'intitle:"Digital Manufacturing Engineer" "United States" job',
+        'intitle:"Industrial Data Analyst" "Mechanical" "United States"',
+        'intitle:"Manufacturing Technology Analyst" "United States" job',
+        'intitle:"Smart Manufacturing Engineer" "United States" job'
     ]
     
     url = "https://google.serper.dev/search"
@@ -23,7 +24,7 @@ def get_jobs():
 
     for q in queries:
         try:
-            # num: 10 allows for a wider reach across the general web
+            # Fetching 10 results per query for a broad internet search
             res = requests.post(url, headers=headers, json={"q": q, "num": 10, "tbs": "qdr:d"})
             organic = res.json().get('organic', [])
             all_results.extend(organic)
@@ -44,11 +45,11 @@ def update_database(new_raw_leads):
             except: 
                 database = []
 
-    # Step 4: Cleanup jobs older than 72 hours
+    # Cleanup jobs older than 72 hours
     three_days_ago = datetime.now() - timedelta(days=3)
     database = [j for j in database if datetime.strptime(j['found_at'], "%Y-%m-%d %H:%M") > three_days_ago]
 
-    # Step 5: 6PM LOCK (23:00 UTC) - Archive "New" jobs
+    # Archive logic for daily review
     if datetime.now().hour == 23:
         for job in database:
             if job['status'] == 'New':
@@ -60,11 +61,11 @@ def update_database(new_raw_leads):
     for lead in new_raw_leads:
         url = lead.get('link')
         if url and url not in existing_urls:
-            title = lead.get('title', 'Operations Analyst')
+            title = lead.get('title', 'Hybrid Manufacturing/Data Role')
             posted_time = lead.get('date', 'Just now') 
             
-            # Extract company name from common title formats
-            company = "US Company"
+            # Simple company extraction
+            company = "Manufacturing/Tech Co"
             if " at " in title:
                 company = title.split(" at ")[-1].split(" - ")[0]
             elif " | " in title:
@@ -80,16 +81,16 @@ def update_database(new_raw_leads):
             })
             existing_urls.add(url)
 
-    # Combine new leads at the top, cap database at 100 for global search
+    # Combine and cap
     database = (new_entries + database)[:100]
 
     with open(file_path, 'w') as f:
         json.dump(database, f, indent=4)
     
-    print(f"✅ Success: {len(new_entries)} new Operations leads. Total: {len(database)}")
+    print(f"✅ Success: {len(new_entries)} hybrid roles found. Total: {len(database)}")
 
 if __name__ == "__main__":
     if not SERPER_KEY:
-        print("❌ Error: SERPER_API_KEY environment variable not found.")
+        print("❌ Error: SERPER_API_KEY not found.")
     else:
         update_database(get_jobs())
